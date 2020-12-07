@@ -1,7 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import "normalize.css";
 // or import { render } from 'react-dom'; change ReactDOM.render below to just 'render'
-import App from './app';
+import App from "./app";
+import { GlobalStyles } from "./global-styles";
 
-ReactDOM.render(<App />, document.getElementById('root')
+ReactDOM.render(
+    <>
+        <GlobalStyles />
+        <App />
+    </>,
+    document.getElementById("root")
 );
