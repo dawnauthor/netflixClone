@@ -2,7 +2,6 @@
   "name": "netflix",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://coding-ronin-dev.github.io/netflixClone",
   "dependencies": {
     "firebase": "^7.19.1",
     "fuse.js": "^6.4.1",
@@ -16,7 +15,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject"
