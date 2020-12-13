@@ -20,13 +20,18 @@ export default function Player({ children, ...restProps }) {
 Player.Video = function PlayerVideo({ src, ...restProps }) {
 	const { showPlayer, setShowPlayer } = useContext(PlayerContext);
 
+	//why does clicking on the player itself need to close the player? That's ridiculous
 	return showPlayer ? ReactDOM.createPortal(
-		<Overlay {...restProps}>
+		<Overlay
+			onClick={() => setShowPlayer(false)}
+			{...restProps}
+			data-testid="player"
+		>
 			<Inner>
 				<video id="netflix-player" controls>
 					<source src={src} type="video/mp4" />
 				</video>
-				<Close onClick={() => setShowPlayer(false)}/>
+				<Close data-testid="close-player" onClick={() => setShowPlayer(false)}/>
 			</Inner>
 		</Overlay>,
 		document.body
