@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
+import Fuse from 'fuse.js';
 import { FirebaseContext } from '../context/firebase';
 import { SelectProfileContainer } from './profiles';
-import { Card, Header, Loading } from '../components';
+import { FooterContainer } from './footer';
+import { Card, Header, Loading, Player } from '../components';
 import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
 
@@ -26,6 +28,19 @@ export function BrowseContainer({ slides }) {
 	useEffect(() => {
 		setSlideRows(slides[category]);
 	}, [slides, category]);
+
+	//live search
+	//read up on fuse docs to filter results more aggressively if needed
+	useEffect(() => {
+		const fuse = new Fuse(slideRows, { keys: ['data.description, data.title', 'data.genre']});
+		const results = fuse.search(searchTerm).map(({ item }) => item);
+
+		if(slideRows.length > 0 && searchTerm.length > 3 && results.length > 0) {
+			setSlideRows(results);
+		} else {
+			setSlideRows(slides[category]);
+		}
+	}, [searchTerm]);
 
 	return profile.displayName ? (
 		<>
@@ -97,15 +112,15 @@ export function BrowseContainer({ slides }) {
 							))}
 						</Card.Entities>
 						<Card.Feature category={category}>
-							<p>Hello</p>
-							{/* <Player>
+							<Player>
 								<Player.Button />
 								<Player.Video src="/videos/bunny.mp4" />
-							</Player> */}
+							</Player>
 						</Card.Feature>
 					</Card>
 				))}
 			</Card.Group>
+			<FooterContainer />
 		</>
 	) : (
 		<SelectProfileContainer user={user} setProfile={setProfile}/>
